@@ -1,412 +1,2895 @@
-
 <!doctype html>
-<html>
-
+<html lang="ko">
 <head>
-    <link rel="icon" href="./img/favicon.ico" type="image/x-icon" sizes="16x16">
-    <meta name="description" content="간편하게 즐길 수 있는 RPG형식의 타자연습 사이트/타이핑 사이트">
-    <meta property="og:title" content="타이핑RPG TypingRPG" />
-    <meta property="og:description"  content="간편하게 즐길 수 있는 RPG형식의 타자연습 사이트" />
-    <link rel="canonical" href="https://typingrpg.netlify.app/index.html">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Required meta tags -->
-    <meta name="google-site-verification" content="UZrn9EZIicOKKnIINbiWZihKYS9FZMlQJ5gQMK03zC8" />
-    <meta charset="utf-8">
-    <!-- This site is hosted on Netlify. Anyone can build and deploy a site
-         like this one for free: https://netlify.new/?utm_campaign=ai-legible&utm_source=comment&utm_medium=referral&utm_id=8c796736-49f8-429e-b51e-61bcee989137
-         Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
-    <meta name="hosting-provider" content="Netlify">
-    <meta name="netlify-deploy" content="https://netlify.new/?utm_campaign=ai-legible&amp;utm_source=meta&amp;utm_medium=referral&amp;utm_id=8c796736-49f8-429e-b51e-61bcee989137">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="google" content="notranslate">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-18321MDWM8"></script>
+  <title>타이핑 RPG - 타자연습 게임</title>
 
+  <meta
+          name="description"
+          content="단어와 문장을 입력하며 몬스터를 물리치는 무료 웹 타자연습 RPG 게임입니다."
+  >
+  <meta
+          name="keywords"
+          content="타자연습, 타이핑게임, 타자게임, 타이핑RPG, 한글타자연습, RPG"
+  >
 
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+  <meta property="og:title" content="타이핑 RPG">
+  <meta
+          property="og:description"
+          content="타자를 입력하고 몬스터를 물리치며 성장하는 무료 타자연습 RPG 게임"
+  >
+  <meta property="og:type" content="website">
 
-        gtag('config', 'G-18321MDWM8');
-    </script>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="/manifest.webmanifest">
 
-    <!-- naver search advisor -->
-    <meta name="naver-site-verification" content="a9fb9a94574a826a75780a2a7b83206d4e548042" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet"
+  >
 
+  <style>
+    :root {
+      --background: #f6f8fb;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
 
-    <script src="https://www.gstatic.com/firebasejs/7.2/firebase.js"></script>
+      --text: #172033;
+      --text-soft: #64748b;
 
+      --line: #e5eaf1;
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="practicemode.css">
-    <title>타이핑RPG TypingRPG</title>
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-soft: #eff6ff;
 
+      --danger: #ef4444;
+      --danger-soft: #fef2f2;
+
+      --success: #16a34a;
+      --success-soft: #f0fdf4;
+
+      --warning: #f59e0b;
+
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      --radius: 24px;
+      --radius-small: 16px;
+
+      --max-width: 1080px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--background);
+      color: var(--text);
+
+      font-family:
+              "Noto Sans KR",
+              -apple-system,
+              BlinkMacSystemFont,
+              "Segoe UI",
+              sans-serif;
+
+      letter-spacing: -0.04em;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+      letter-spacing: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .page {
+      width: min(calc(100% - 32px), var(--max-width));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+
+      border: 1px solid var(--line);
+      border-radius: 16px;
+
+      background: var(--surface);
+      box-shadow: var(--shadow);
+
+      font-size: 25px;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .brand-description {
+      margin: 2px 0 0;
+      color: var(--text-soft);
+      font-size: 13px;
+    }
+
+    .firebase-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+
+      background: var(--surface);
+      color: var(--text-soft);
+
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .firebase-status::before {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+      background: #94a3b8;
+
+      content: "";
+    }
+
+    .firebase-status.connected::before {
+      background: var(--success);
+    }
+
+    .game-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .status-bar {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .status-item {
+      min-width: 0;
+      padding: 15px 10px;
+      text-align: center;
+    }
+
+    .status-item + .status-item {
+      border-left: 1px solid var(--line);
+    }
+
+    .status-label {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text-soft);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .status-value {
+      overflow: hidden;
+      display: block;
+
+      font-size: 17px;
+      font-weight: 800;
+
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .battle {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 120px minmax(0, 1fr);
+      align-items: center;
+      gap: 20px;
+
+      min-height: 330px;
+      padding: 32px;
+    }
+
+    .fighter {
+      min-width: 0;
+      text-align: center;
+    }
+
+    .fighter-name {
+      margin-bottom: 12px;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .fighter-character {
+      display: grid;
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 20px;
+
+      place-items: center;
+
+      border: 1px solid var(--line);
+      border-radius: 32px;
+
+      background: var(--surface-soft);
+
+      font-size: 82px;
+      line-height: 1;
+
+      transition:
+              transform 0.16s ease,
+              background 0.16s ease;
+    }
+
+    .fighter-character.attack {
+      transform: translateX(16px) scale(1.05);
+    }
+
+    .monster .fighter-character.attack {
+      transform: translateX(-16px) scale(1.05);
+    }
+
+    .fighter-character.hit {
+      background: var(--danger-soft);
+      transform: scale(0.94);
+    }
+
+    .hp-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+
+      margin-bottom: 7px;
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .progress {
+      overflow: hidden;
+      width: 100%;
+      height: 10px;
+
+      border-radius: 999px;
+      background: #edf1f5;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 100%;
+
+      border-radius: inherit;
+      background: var(--success);
+
+      transition: width 0.25s ease;
+    }
+
+    .monster .progress-bar {
+      background: var(--danger);
+    }
+
+    .versus {
+      text-align: center;
+    }
+
+    .stage {
+      margin-bottom: 8px;
+      color: var(--text-soft);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .vs {
+      color: #cbd5e1;
+      font-size: 34px;
+      font-weight: 800;
+    }
+
+    .combo {
+      min-height: 24px;
+      margin-top: 10px;
+
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .practice-panel {
+      padding: 0 32px 32px;
+    }
+
+    .word-box {
+      padding: 26px;
+
+      border: 1px solid var(--line);
+      border-radius: var(--radius-small);
+
+      background: var(--surface-soft);
+      text-align: center;
+    }
+
+    .mode-label {
+      margin-bottom: 8px;
+      color: var(--text-soft);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .target-word {
+      min-height: 48px;
+
+      font-size: clamp(27px, 5vw, 38px);
+      font-weight: 800;
+      line-height: 1.4;
+
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    .typing-input {
+      width: 100%;
+      height: 58px;
+      margin-top: 16px;
+      padding: 0 18px;
+
+      outline: none;
+      border: 2px solid var(--line);
+      border-radius: 16px;
+
+      background: var(--surface);
+      color: var(--text);
+
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+
+      transition:
+              border-color 0.15s ease,
+              box-shadow 0.15s ease;
+    }
+
+    .typing-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.09);
+    }
+
+    .typing-input.correct {
+      border-color: var(--success);
+    }
+
+    .typing-input.wrong {
+      border-color: var(--danger);
+    }
+
+    .typing-meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .typing-meta-item {
+      padding: 11px 8px;
+
+      border: 1px solid var(--line);
+      border-radius: 13px;
+
+      background: var(--surface);
+    }
+
+    .typing-meta-label {
+      display: block;
+      color: var(--text-soft);
+      font-size: 11px;
+    }
+
+    .typing-meta-value {
+      display: block;
+      margin-top: 2px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .control-panel {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .control-left {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .select {
+      min-height: 44px;
+      padding: 0 36px 0 14px;
+
+      outline: none;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+
+      background: var(--surface);
+      color: var(--text);
+
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .button {
+      min-height: 44px;
+      padding: 0 18px;
+
+      border-radius: 13px;
+
+      background: var(--primary);
+      color: #ffffff;
+
+      font-size: 13px;
+      font-weight: 800;
+
+      transition:
+              background 0.15s ease,
+              transform 0.15s ease;
+    }
+
+    .button:hover:not(:disabled) {
+      background: var(--primary-hover);
+    }
+
+    .button:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    .button.secondary {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .button.secondary:hover:not(:disabled) {
+      background: var(--surface-soft);
+    }
+
+    .skill-panel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+
+      padding: 20px 32px 32px;
+      border-top: 1px solid var(--line);
+    }
+
+    .skill {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      padding: 15px;
+
+      border: 1px solid var(--line);
+      border-radius: 16px;
+
+      background: var(--surface);
+      color: var(--text);
+
+      text-align: left;
+
+      transition:
+              border-color 0.15s ease,
+              background 0.15s ease;
+    }
+
+    .skill:hover:not(:disabled) {
+      border-color: #c9d8f8;
+      background: var(--primary-soft);
+    }
+
+    .skill-icon {
+      display: grid;
+      flex: 0 0 42px;
+
+      width: 42px;
+      height: 42px;
+
+      place-items: center;
+
+      border-radius: 13px;
+      background: var(--surface-soft);
+
+      font-size: 22px;
+    }
+
+    .skill-name {
+      display: block;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .skill-description {
+      display: block;
+      margin-top: 2px;
+      color: var(--text-soft);
+      font-size: 11px;
+    }
+
+    .message {
+      min-height: 48px;
+      margin-top: 16px;
+      padding: 13px 16px;
+
+      border: 1px solid var(--line);
+      border-radius: 15px;
+
+      background: var(--surface);
+      color: var(--text-soft);
+
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .message.success {
+      border-color: #bbf7d0;
+      background: var(--success-soft);
+      color: #166534;
+    }
+
+    .message.danger {
+      border-color: #fecaca;
+      background: var(--danger-soft);
+      color: #991b1b;
+    }
+
+    .footer {
+      padding: 22px 0 0;
+      color: var(--text-soft);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .footer p {
+      margin: 5px 0;
+    }
+
+    .modal {
+      position: fixed;
+      z-index: 100;
+
+      inset: 0;
+
+      display: grid;
+      padding: 20px;
+
+      place-items: center;
+
+      background: rgba(15, 23, 42, 0.42);
+    }
+
+    .modal-card {
+      width: min(100%, 420px);
+      padding: 30px;
+
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+
+      text-align: center;
+    }
+
+    .modal-icon {
+      font-size: 52px;
+    }
+
+    .modal-title {
+      margin: 14px 0 8px;
+      font-size: 24px;
+    }
+
+    .modal-description {
+      margin: 0 0 20px;
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: min(calc(100% - 20px), var(--max-width));
+        padding-top: 16px;
+      }
+
+      .header {
+        align-items: flex-start;
+      }
+
+      .firebase-status {
+        display: none;
+      }
+
+      .status-bar {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .status-item:nth-child(4),
+      .status-item:nth-child(5) {
+        border-top: 1px solid var(--line);
+      }
+
+      .status-item:nth-child(4) {
+        grid-column: span 1;
+        border-left: 0;
+      }
+
+      .status-item:nth-child(5) {
+        grid-column: span 2;
+      }
+
+      .battle {
+        grid-template-columns: 1fr 50px 1fr;
+        gap: 8px;
+        min-height: 260px;
+        padding: 22px 14px;
+      }
+
+      .fighter-character {
+        width: 105px;
+        height: 105px;
+        border-radius: 24px;
+        font-size: 58px;
+      }
+
+      .fighter-name {
+        font-size: 13px;
+      }
+
+      .vs {
+        font-size: 23px;
+      }
+
+      .practice-panel {
+        padding: 0 14px 22px;
+      }
+
+      .word-box {
+        padding: 20px 14px;
+      }
+
+      .typing-meta {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .control-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .control-left {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .select {
+        width: 100%;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .skill-panel {
+        grid-template-columns: 1fr;
+        padding: 18px 14px 24px;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .brand-description {
+        display: none;
+      }
+
+      .brand-title {
+        font-size: 18px;
+      }
+
+      .brand-icon {
+        width: 42px;
+        height: 42px;
+      }
+
+      .battle {
+        grid-template-columns: 1fr 34px 1fr;
+      }
+
+      .fighter-character {
+        width: 85px;
+        height: 85px;
+        font-size: 48px;
+      }
+
+      .status-value {
+        font-size: 14px;
+      }
+
+      .target-word {
+        font-size: 25px;
+      }
+
+      .typing-input {
+        height: 54px;
+        font-size: 16px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!---------- Loading 화면 코드 시작 ----------------------------------------------------------------------------- Loading 화면 코드 시작 -->
-<!---------- Loading 화면 코드 시작 ----------------------------------------------------------------------------- Loading 화면 코드 시작 -->
-<script src="https://code.jquery.com/jquery-1.8.0.js"
-        integrity="sha256-00Fh8tkPAe+EmVaHFpD+HovxWk7b97qwqVi7nLvjdgs="
-        crossorigin="anonymous"></script>
-<script type="text/javascript">
-    $(window).on('load', function () {
-        $("#load").delay('50').fadeOut();
-    });
-</script>
-<style type="text/css">
-    #load {
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        position: fixed;
-        display: block;
-        opacity: 0.8;
-        background: rgb(0, 0, 0, 0.7);
-        z-index: 99;
-        text-align: center;
-    }
+<div class="page">
 
-    #load > img {
-        position: absolute;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        -o-transform: translate(-50%, -50%);
-        z-index: 100;
-    }
-</style>
-<div id="load">
-    <img src="img/loading.gif" alt="loading">
-</div>
-<!-- Loading 화면 코드 종료---------------------------------------------------------------------------------- Loading 화면 코드 종료------------>
-<!-- Loading 화면 코드 종료---------------------------------------------------------------------------------- Loading 화면 코드 종료------------>
+  <header class="header">
+    <div class="brand">
+      <div class="brand-icon" aria-hidden="true">⚔️</div>
 
-<head>
+      <div>
+        <h1 class="brand-title">타이핑 RPG</h1>
+        <p class="brand-description">
+          Typing RPG · 타자를 입력하고 몬스터를 물리쳐 보세요.
+        </p>
+      </div>
+    </div>
 
-</head>
+    <div
+            id="firebaseStatus"
+            class="firebase-status"
+            title="Firebase 연결 상태"
+    >
+      로컬 저장
+    </div>
+  </header>
 
-<!-- 인게임 로그아웃 버튼 -->
-<div class="IngameLogoutButton hide">
-    <div class="IngameUserProfile"></div>  <span class="IngameUserName">UserName</span>
-</div>
-<div class="rewardExp idle">
-    <span class="msgExp">+ EXP 50</span>
-</div>
-<div class="rewardGold idle">
-    <span class="msgGold">+ Gold 0</span>
-</div>
+  <main class="game-card">
 
+    <section class="status-bar" aria-label="플레이어 정보">
+      <div class="status-item">
+        <span class="status-label">LEVEL</span>
+        <strong id="levelDisplay" class="status-value">1</strong>
+      </div>
 
-<div id="main">
-    <div id="mainhead">
-        <div class="display_darkModeFilter"></div>
-        <div class="beta">BETA</div>
+      <div class="status-item">
+        <span class="status-label">EXP</span>
+        <strong id="expDisplay" class="status-value">0 / 100</strong>
+      </div>
 
-        <div id="hitEffect"></div>
-        <div id="character_shadow"></div>
-        <div id="monster_shadow"></div>
+      <div class="status-item">
+        <span class="status-label">GOLD</span>
+        <strong id="goldDisplay" class="status-value">0</strong>
+      </div>
 
-        <img id= "img" class="monster" alt="">
-        <!-- 캐릭터 커스터마이징 로딩 애니메이션 -->
-        <div class="loadingio-spinner-rolling-qcn71a9zbql"><div class="ldio-5kptqcaie38"><div></div></div></div>
+      <div class="status-item">
+        <span class="status-label">ATTACK</span>
+        <strong id="attackDisplay" class="status-value">10</strong>
+      </div>
 
-        <div class="characterBox">
-            <!-- 스프라이트 시트 영역 =================================== -->
-            <div id = "characterImg"></div>
-            <div id = "hair"></div>
-            <div id = "pants"> </div>
-            <div id = "shirt"></div>
-            <div id = "face"></div>
-            <div id = "helmet"></div>
+      <div class="status-item">
+        <span class="status-label">BEST COMBO</span>
+        <strong id="bestComboDisplay" class="status-value">0</strong>
+      </div>
+    </section>
 
+    <section class="battle">
 
-            <div id="weaponImg"></div>
-
-            <!-- 힐 모션 -->
-            <div id="characterHealMotionImg"></div>
-            <div id="weaponHealMotionImg"></div>
-            <div id = "heal_hair"></div>
-            <div id = "heal_pants"> </div>
-            <div id = "heal_shirt"></div>
-            <div id = "heal_face"></div>
-            <div id = "heal_helmet"></div>
-            <div id= "healEffect"></div>
+      <div class="fighter player">
+        <div class="fighter-name">
+          🧑‍💻 플레이어
         </div>
-        <!-- 스킬 이펙트 -->
-        <div id="characterSkillMotion"></div>
-        <div id="skillEffectMotion"></div>
 
-        <!-- ====================================================== -->
-
-
-
-    </div>
-    <div id="displayEffect"></div>
-    <img id= "img" class="characterShadow" alt="">
-
-    <div class="mosterHpBox"><progress id="MonsterHP" value="100" max="100"></progress></div>
-
-    <div class="damageNumber_animate">
-        <span id="damageNumber"></span>
-
-    </div>
-
-    <!-- 평타 데미지 숫자 이펙트 -->
-    <div class="number-container">
-        <span class="moving-number"></span>
-    </div>
-    <!-- 경험치 획득 이펙트 -->
-    <div class="exp-container">
-        <span class="moving-exp"></span>
-    </div>
-
-    <div class="indicater">
-
-        <div class="speed"><div class="indicate-box"><span class="indicate-assist">CPM: </span><span class="speed-display">0</span></div></div>
-        <div class="accuracy"><div class="indicate-box"><span class="indicate-assist">ACC: </span><span class="accuracy-display">0</span></div></div>
-        <div class="count"><div class="indicate-box"><span class="indicate-assist">CNT: </span><span class="count-display">0</span></div></div>
-
-    </div>
-
-    <div class="recodeBox"></div>
-    <div class="recode">
-        CPM: <span class="wpm-display">XX</span> / ACC: <span class="acc-display">XX</span> / MAX: <span class="max-display">XX</span>
-    </div>
-
-
-    <ul class="handler-ul">
-        <br>
-
-
-        <div class="TextSourceBox">- <span class="textSource"></span> -</div>
-
-
-        <!-- 실제로 문장 보여주는 곳 (word-display에 임시 저장 후 여기로 문자열을 불러옴)-->
-        <div class="temp">문장을 불러오는 중 입니다...</div>
-
-
-        <input class="content" onpaste="return false;" type="text" spellcheck="false" onkeyup="enterkey()" style="border:none" size="80" placeholder="위 문장을 타이핑 하세요." autofocus>
-        <!-- <textarea class="content" onkeyup="enterkey()" style="border:none" rows="1" cols="100" placeholder="위 문장을 타이핑 하세요." autofocus></textarea> -->
-        <hr id="textline" style="border:solid 2px rgb(112, 112, 112); width:95%">
-        <progress id="expGageBar" value="0" max="100"></progress>
-    </ul>
-
-    <div class="parent">
-        <div class="first">	<progress id="HP" value="100" max="100"></progress></div>
-        <div class="second" style=" text-align: center;">
-
-            <a href='/help/help_kor' target='_blank'><input type="button" class="button1"></a>
-
-            <a href="/"><input type="button" class="button2"></a>
-            <input type="button" onclick="check()"class="button3">
+        <div
+                id="playerCharacter"
+                class="fighter-character"
+                aria-label="플레이어 캐릭터"
+        >
+          🧙
         </div>
-        <div class="third"><progress value="0" min = "0" max="200" id="lb"></progress></div>
 
-    </div>
-    <div class="strGageBox">	<progress id="strGage" value="0" max="6"></progress></div>
+        <div class="hp-row">
+          <span>HP</span>
+          <span id="playerHpText">100 / 100</span>
+        </div>
 
+        <div class="progress">
+          <div
+                  id="playerHpBar"
+                  class="progress-bar"
+          ></div>
+        </div>
+      </div>
 
-    <!-- 단어 혹은 문장 선택 창 -->
-    <!-- <div id="sentenceSelectBox">
-       <button id="wordsSelectButton">words</button>|<button id="quoteSelectButton">quote</button>
-    </div> -->
+      <div class="versus">
+        <div id="stageDisplay" class="stage">
+          STAGE 1
+        </div>
+
+        <div class="vs">VS</div>
+
+        <div id="comboDisplay" class="combo"></div>
+      </div>
+
+      <div class="fighter monster">
+        <div id="monsterName" class="fighter-name">
+          슬라임
+        </div>
+
+        <div
+                id="monsterCharacter"
+                class="fighter-character"
+                aria-label="몬스터"
+        >
+          🟢
+        </div>
+
+        <div class="hp-row">
+          <span>HP</span>
+          <span id="monsterHpText">40 / 40</span>
+        </div>
+
+        <div class="progress">
+          <div
+                  id="monsterHpBar"
+                  class="progress-bar"
+          ></div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="practice-panel">
+
+      <div class="word-box">
+        <div id="modeLabel" class="mode-label">
+          단어 연습 · WORD MODE
+        </div>
+
+        <div
+                id="targetWord"
+                class="target-word"
+                aria-live="polite"
+        >
+          시작 버튼을 눌러주세요
+        </div>
+
+        <input
+                id="typingInput"
+                class="typing-input"
+                type="text"
+                maxlength="100"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                placeholder="여기에 입력하세요"
+                aria-label="타자 입력"
+                disabled
+        >
+
+        <div class="typing-meta">
+          <div class="typing-meta-item">
+            <span class="typing-meta-label">타수</span>
+            <strong
+                    id="speedDisplay"
+                    class="typing-meta-value"
+            >
+              0 CPM
+            </strong>
+          </div>
+
+          <div class="typing-meta-item">
+            <span class="typing-meta-label">정확도</span>
+            <strong
+                    id="accuracyDisplay"
+                    class="typing-meta-value"
+            >
+              100%
+            </strong>
+          </div>
+
+          <div class="typing-meta-item">
+            <span class="typing-meta-label">정답</span>
+            <strong
+                    id="correctDisplay"
+                    class="typing-meta-value"
+            >
+              0
+            </strong>
+          </div>
+
+          <div class="typing-meta-item">
+            <span class="typing-meta-label">콤보</span>
+            <strong
+                    id="currentComboDisplay"
+                    class="typing-meta-value"
+            >
+              0
+            </strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-panel">
+
+        <div class="control-left">
+
+          <select
+                  id="practiceMode"
+                  class="select"
+                  aria-label="연습 모드"
+          >
+            <option value="word">
+              단어 연습
+            </option>
+
+            <option value="sentence">
+              문장 연습
+            </option>
+          </select>
+
+          <select
+                  id="difficulty"
+                  class="select"
+                  aria-label="난이도"
+          >
+            <option value="easy">
+              쉬움
+            </option>
+
+            <option value="normal" selected>
+              보통
+            </option>
+
+            <option value="hard">
+              어려움
+            </option>
+          </select>
+
+        </div>
+
+        <button
+                id="startButton"
+                class="button"
+                type="button"
+        >
+          ▶ 게임 시작
+        </button>
+
+      </div>
+
+      <div
+              id="message"
+              class="message"
+              aria-live="polite"
+      >
+        게임을 시작하면 표시된 단어나 문장을 정확하게 입력하세요.
+      </div>
+
+    </section>
+
+    <section class="skill-panel">
+
+      <button
+              id="healButton"
+              class="skill"
+              type="button"
+              disabled
+      >
+        <span class="skill-icon">❤️</span>
+
+        <span>
+                    <strong class="skill-name">
+                        회복 물약
+                    </strong>
+
+                    <span class="skill-description">
+                        HP +30 · 30 Gold
+                    </span>
+                </span>
+      </button>
+
+      <button
+              id="powerButton"
+              class="skill"
+              type="button"
+              disabled
+      >
+        <span class="skill-icon">⚡</span>
+
+        <span>
+                    <strong class="skill-name">
+                        강력한 공격
+                    </strong>
+
+                    <span class="skill-description">
+                        다음 공격 ×2 · 50 Gold
+                    </span>
+                </span>
+      </button>
+
+      <button
+              id="resetButton"
+              class="skill"
+              type="button"
+      >
+        <span class="skill-icon">🔄</span>
+
+        <span>
+                    <strong class="skill-name">
+                        진행 초기화
+                    </strong>
+
+                    <span class="skill-description">
+                        저장된 RPG 진행도 삭제
+                    </span>
+                </span>
+      </button>
+
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>
+      광고 없음 · 랭킹 없음 · 회원가입 없음
+    </p>
+
+    <p>
+      Vanilla JavaScript + Firebase 12
+    </p>
+  </footer>
+
 </div>
 
-<!-- 사용자 경험치 바 -->
 
+<div
+        id="gameOverModal"
+        class="modal"
+        hidden
+>
+  <div class="modal-card">
+    <div class="modal-icon">💀</div>
 
+    <h2 class="modal-title">
+      모험 실패
+    </h2>
 
-<!-- 임시 텍스트 저장 -->
-<div class="word-display"> </div><!--이 영역은 보이지 않으며, 값을 임시저장 후 문자열을 불러오는 용도 -->
+    <p class="modal-description">
+      HP가 모두 소진되었습니다.<br>
+      현재 레벨과 진행도는 유지됩니다.
+    </p>
 
-
-
-
-<!-- 사이드메뉴 -->
-<input type="checkbox" id="menuicon">
-<label for="menuicon">
-    <span></span>
-    <span></span>
-    <span></span>
-</label>
-<div class="sidebar">
-    <div class="toggleBox">
-        <img id="bright" src="img/bright.png" alt="">
-        <input type="checkBox" id="chk1"><label id="toggle" for="chk1"> <span>선택</span>  </label>
-        <img id="dark" src="img/dark.png" alt="">
-    </div>
-
-    <div class="SentenceTypeSetting">
-        <span class="SettingName">Sentence Type</span>
-        <button class="SettingButton" id="quoteButton" onclick="quoteSelecting()">quote</button><button class="SettingButton" id="wordsButton" onclick="wordsSelecting()">words</button>
-    </div>
-    <div class="EffectSetting">
-        <span class="SettingName">Monster damage effect</span>
-        <button class="SettingButton" id="monsterDamageEffectOn" onclick="monsterDamageEffectOn()">on</button><button class="SettingButton" id="monsterDamageEffectOff" onclick="monsterDamageEffectOff()">off</button>
-    </div>
-
-
-
+    <button
+            id="retryButton"
+            class="button"
+            type="button"
+    >
+      다시 도전
+    </button>
+  </div>
 </div>
-<script>
-    function check(){
-        $("input:checkbox[id='menuicon']").prop("checked", true);
+
+
+<script type="module">
+
+  /*
+   * =========================================================
+   * Firebase 12
+   * =========================================================
+   *
+   * Firebase Console → 프로젝트 설정 → 내 앱 → SDK 설정에서
+   * 아래 firebaseConfig 값을 자신의 프로젝트 값으로 변경하세요.
+   *
+   * 랭킹 기능은 사용하지 않습니다.
+   * players/{anonymousUid}/progress 에 개인 진행도만 저장합니다.
+   *
+   */
+
+  import {
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+  import {
+    getAuth,
+    signInAnonymously,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+  import {
+    getDatabase,
+    ref,
+    get,
+    set
+  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+
+
+  /* =========================================================
+     Firebase 설정
+     ========================================================= */
+
+  const firebaseConfig = {
+
+    apiKey: "AIzaSyBCN-yOjN0CYjdskON8kOzELYELQ8zRMm8",
+    authDomain: "temp-crud-85ba9.firebaseapp.com",
+    databaseURL: "https://temp-crud-85ba9-default-rtdb.firebaseio.com",
+    projectId: "temp-crud-85ba9",
+    storageBucket: "temp-crud-85ba9.firebasestorage.app",
+    messagingSenderId: "990504243112",
+    appId: "1:990504243112:web:69f2117ad0ffc9ca1f579d"
+
+  };
+
+
+  /* =========================================================
+     DOM
+     ========================================================= */
+
+  const elements = {
+
+    firebaseStatus:
+            document.getElementById("firebaseStatus"),
+
+    level:
+            document.getElementById("levelDisplay"),
+
+    exp:
+            document.getElementById("expDisplay"),
+
+    gold:
+            document.getElementById("goldDisplay"),
+
+    attack:
+            document.getElementById("attackDisplay"),
+
+    bestCombo:
+            document.getElementById("bestComboDisplay"),
+
+    stage:
+            document.getElementById("stageDisplay"),
+
+    combo:
+            document.getElementById("comboDisplay"),
+
+    playerCharacter:
+            document.getElementById("playerCharacter"),
+
+    monsterCharacter:
+            document.getElementById("monsterCharacter"),
+
+    monsterName:
+            document.getElementById("monsterName"),
+
+    playerHpText:
+            document.getElementById("playerHpText"),
+
+    playerHpBar:
+            document.getElementById("playerHpBar"),
+
+    monsterHpText:
+            document.getElementById("monsterHpText"),
+
+    monsterHpBar:
+            document.getElementById("monsterHpBar"),
+
+    targetWord:
+            document.getElementById("targetWord"),
+
+    typingInput:
+            document.getElementById("typingInput"),
+
+    speed:
+            document.getElementById("speedDisplay"),
+
+    accuracy:
+            document.getElementById("accuracyDisplay"),
+
+    correct:
+            document.getElementById("correctDisplay"),
+
+    currentCombo:
+            document.getElementById("currentComboDisplay"),
+
+    modeLabel:
+            document.getElementById("modeLabel"),
+
+    practiceMode:
+            document.getElementById("practiceMode"),
+
+    difficulty:
+            document.getElementById("difficulty"),
+
+    startButton:
+            document.getElementById("startButton"),
+
+    healButton:
+            document.getElementById("healButton"),
+
+    powerButton:
+            document.getElementById("powerButton"),
+
+    resetButton:
+            document.getElementById("resetButton"),
+
+    message:
+            document.getElementById("message"),
+
+    gameOverModal:
+            document.getElementById("gameOverModal"),
+
+    retryButton:
+            document.getElementById("retryButton")
+  };
+
+
+  /* =========================================================
+     연습 데이터
+     ========================================================= */
+
+  const wordSources = {
+
+    easy: [
+      "사과",
+      "학교",
+      "친구",
+      "바다",
+      "하늘",
+      "구름",
+      "나무",
+      "사랑",
+      "희망",
+      "미소",
+      "여행",
+      "사진",
+      "음악",
+      "노래",
+      "마음",
+      "행복",
+      "우산",
+      "시간",
+      "가족",
+      "커피",
+      "연필",
+      "책상",
+      "창문",
+      "햇살",
+      "바람",
+      "고양이",
+      "강아지",
+      "토끼",
+      "새벽",
+      "노을"
+    ],
+
+    normal: [
+      "도전정신",
+      "타자연습",
+      "즐거운하루",
+      "프로그래밍",
+      "자바스크립트",
+      "인터넷세상",
+      "새로운시작",
+      "소중한추억",
+      "푸른하늘",
+      "아름다운풍경",
+      "행복한시간",
+      "반짝이는별빛",
+      "따뜻한마음",
+      "즐거운여행",
+      "용감한모험가",
+      "신비로운마법",
+      "빠른키보드",
+      "집중력향상",
+      "꾸준한연습",
+      "멋진도전자"
+    ],
+
+    hard: [
+      "객체지향프로그래밍",
+      "비동기자바스크립트",
+      "웹애플리케이션",
+      "클라이언트사이드",
+      "사용자인터페이스",
+      "실시간데이터베이스",
+      "프로그래밍언어",
+      "소프트웨어개발자",
+      "정보통신기술",
+      "창의적인문제해결",
+      "꾸준한자기계발",
+      "새로운가능성",
+      "끊임없는도전정신",
+      "효율적인알고리즘",
+      "반응형웹디자인"
+    ]
+
+  };
+
+
+  const sentenceSources = {
+
+    easy: [
+      "오늘도 좋은 하루 보내세요.",
+      "천천히 정확하게 입력해 보세요.",
+      "꾸준한 연습은 실력을 키워 줍니다.",
+      "작은 도전이 큰 변화를 만듭니다.",
+      "즐거운 마음으로 타자를 연습해요.",
+      "하늘에는 구름이 천천히 흘러갑니다.",
+      "따뜻한 햇살이 창문으로 들어옵니다.",
+      "오늘의 노력은 내일의 실력이 됩니다."
+    ],
+
+    normal: [
+      "빠르게 입력하는 것보다 정확하게 입력하는 습관이 중요합니다.",
+      "새로운 것을 배우는 가장 좋은 방법은 직접 해 보는 것입니다.",
+      "작은 성공을 반복하면 어느새 큰 목표에 가까워집니다.",
+      "포기하지 않고 꾸준히 연습하면 타자 실력은 반드시 좋아집니다.",
+      "좋은 프로그램은 단순한 기능보다 즐거운 경험을 만들어 줍니다.",
+      "매일 조금씩 연습하는 습관이 오랫동안 큰 차이를 만듭니다.",
+      "실수해도 괜찮으니 다시 정확하게 입력해 보세요."
+    ],
+
+    hard: [
+      "프로그래밍은 복잡한 문제를 작은 문제로 나누어 해결하는 과정입니다.",
+      "사용자가 편안하게 이용할 수 있는 인터페이스는 좋은 서비스의 중요한 요소입니다.",
+      "빠른 타자 속도와 높은 정확도를 함께 유지하려면 반복적인 연습이 필요합니다.",
+      "새로운 기술을 익힐 때에는 결과뿐 아니라 동작하는 원리를 이해하는 것도 중요합니다.",
+      "꾸준히 개선되는 작은 기능들이 모여 완성도 높은 서비스를 만들어 갑니다."
+    ]
+
+  };
+
+
+  /* =========================================================
+     몬스터
+     ========================================================= */
+
+  const monsters = [
+    {
+      name: "초록 슬라임",
+      emoji: "🟢",
+      hp: 40,
+      damage: 6,
+      exp: 25,
+      gold: 12
+    },
+    {
+      name: "야생 늑대",
+      emoji: "🐺",
+      hp: 60,
+      damage: 8,
+      exp: 35,
+      gold: 18
+    },
+    {
+      name: "불꽃 도깨비",
+      emoji: "👹",
+      hp: 85,
+      damage: 10,
+      exp: 50,
+      gold: 25
+    },
+    {
+      name: "어둠의 기사",
+      emoji: "🥷",
+      hp: 110,
+      damage: 12,
+      exp: 65,
+      gold: 32
+    },
+    {
+      name: "해골 전사",
+      emoji: "💀",
+      hp: 140,
+      damage: 14,
+      exp: 80,
+      gold: 40
+    },
+    {
+      name: "마왕",
+      emoji: "👿",
+      hp: 180,
+      damage: 18,
+      exp: 120,
+      gold: 60
+    },
+    {
+      name: "고대 드래곤",
+      emoji: "🐉",
+      hp: 240,
+      damage: 22,
+      exp: 180,
+      gold: 90
     }
-</script>
-<!-- --------------------------------------------------------사이드메뉴 끝------------------------------------------------------------ -->
+  ];
 
 
+  /* =========================================================
+     게임 상태
+     ========================================================= */
+
+  const defaultPlayer = {
+    level: 1,
+    exp: 0,
+    gold: 0,
+
+    maxHp: 100,
+    hp: 100,
+
+    attack: 10,
+
+    stage: 1,
+    bestCombo: 0
+  };
 
 
-<!-- -----------------------------------------------------------------게임 종료 시 팝업창 -->
-<div class="background">
-    <div class="window">
-        <div class="popup">
-            <!-- <button id="close" style="border: none; border-radius: 3px;   font-family : 'Neodgm';">RESTART</button> -->
-            <div class="popupLogo" style="font-size:55px; position: absolute;"><p class="clearPF"style="color: white; margin-left: 60px; margin-top: -66px;" >Game Over</p></div>
-            <div class="finalBox">
-                <div style="position:absolute; margin-top: -5px; margin-left: 30px;"><span class="TotalRound" style="margin-left: 10px; ">XX</span></div>
-                <div style="position:absolute; margin-top: 47px;margin-left: 30px;"><span class="MonsterHunts" style="margin-left: 10px">XX</span></div>
-                <div style="position:absolute; margin-top: 99px;margin-left: 30px;"><span class="MaxDamage" style="margin-left: 10px">XX</span></div>
-                <div style="position:absolute; margin-top: 157px;margin-left: 20px;"><span class="TotalScore" style="margin-left: 10px">XX</span></div>
-
-                <input type="button" id="restartButton" onclick="window.location.reload();" value="RESTART">
-                <!-- <div class="save_btn"><a class="hover" href='javascript:void(0);' style="color: white;" onclick="PrintDiv($('.popup'));">SCREENSHOT</a></div> -->
-
-                <!-- <div class="ad">
-                <p id="ad_text">AD</p>
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3731206785406673"
-                crossorigin="anonymous"></script>
-
-                <ins class="adsbygoogle"
-                style="display:inline-block;width:728px;height:90px"
-                data-ad-client="ca-pub-3731206785406673"
-                data-ad-slot="6243258654"></ins>
-                <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-                </div> -->
+  let player = {
+    ...defaultPlayer
+  };
 
 
+  let currentMonster = null;
 
-            </div>
-        </div>
-        <div>
-            <div></div>
-        </div>
-    </div>
-</div>
-<!-- -----------------------------------------------------------------게임 종료 시 팝업창 끝 -->
+  let playing = false;
 
+  let target = "";
 
+  let combo = 0;
 
+  let correctCount = 0;
 
+  let totalAttempts = 0;
 
+  let totalTypedCharacters = 0;
 
+  let startTime = 0;
 
+  let powerAttack = false;
 
-<!-- Optional JavaScript; choose one of the two! -->
+  let firebaseUser = null;
 
-<!-- Option 1: Bootstrap Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<!-- Option 2: Separate Popper and Bootstrap JS -->
-<!--
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
--->
-<!--글자 개수-->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  let database = null;
 
-<!-- <input type="text" name="info_1" id="info" placeholder="내용을 입력해주세요"> -->
+  let firebaseEnabled = false;
 
 
-<script>
-    // 입력한 문자 바이트 카운트
-    function bytesHandler(obj){
-        var text = $(obj).val();
-        $('p.bytes').text(getTextLength(text));
-    }
-    // 입력한 문자 바이트 콘솔 프린트
-    function getPrintConsole(obj){
-        var text = $(obj).val();
-// console.log(getTextLength(text));
-    }
+  /* =========================================================
+     공통
+     ========================================================= */
 
-    // function textCMP(obj){
-    //   var text = $(obj).val();
-    //   for(var i=0;i<getTextLength(text);i++){
-    //       if(문제[i]===인풋[i])
-    //       문제[i]의 글자 색을 변경
-    //   }
-    // }
-</script>
+  function randomItem(array) {
+
+    return array[
+            Math.floor(Math.random() * array.length)
+            ];
+
+  }
 
 
+  function clamp(value, min, max) {
 
-<style>
-    #myProgress {
-        position: relative;
-        width: 100%;
-        height: 30px;
-        background-color: #ddd;
+    return Math.min(
+            Math.max(value, min),
+            max
+    );
+
+  }
+
+
+  function setMessage(text, type = "") {
+
+    elements.message.textContent = text;
+
+    elements.message.className = "message";
+
+    if (type) {
+      elements.message.classList.add(type);
     }
 
-    #myBar {
-        position: absolute;
-        width: 10%;
-        height: 100%;
-        background-color: #4CAF50;
+  }
+
+
+  function animate(element, className) {
+
+    element.classList.remove(className);
+
+    void element.offsetWidth;
+
+    element.classList.add(className);
+
+    window.setTimeout(() => {
+      element.classList.remove(className);
+    }, 180);
+
+  }
+
+
+  /* =========================================================
+     Firebase
+     ========================================================= */
+
+  function hasFirebaseConfig() {
+
+    return Boolean(
+            firebaseConfig &&
+            firebaseConfig.apiKey &&
+            firebaseConfig.projectId
+    );
+
+  }
+
+
+  async function initializeFirebase() {
+
+    if (!hasFirebaseConfig()) {
+
+      elements.firebaseStatus.textContent =
+              "로컬 저장";
+
+      loadLocalProgress();
+
+      return;
+
     }
 
-    #label {
-        text-align: center;
-        line-height: 30px;
-        color: white;
-    }
-</style>
+
+    try {
+
+      const app = initializeApp(firebaseConfig);
+
+      const auth = getAuth(app);
+
+      database = getDatabase(app);
+
+      firebaseEnabled = true;
 
 
+      onAuthStateChanged(auth, async (user) => {
 
-<script>
-    function move() {
-        var elem = document.getElementById("myBar");
-        var width = 0;
-        var id = setInterval(frame, 10);
-        function frame() {
-            if (width >= 100) {
-                clearInterval(id);
-            } else {
-                width++;
-                elem.style.width = width + '%';
-                document.getElementById("label").innerHTML = width * 1 + '%';
-            }
+        if (!user) {
+          return;
         }
+
+        firebaseUser = user;
+
+        elements.firebaseStatus.textContent =
+                "Firebase 연결";
+
+        elements.firebaseStatus.classList.add(
+                "connected"
+        );
+
+        await loadFirebaseProgress();
+
+      });
+
+
+      await signInAnonymously(auth);
+
+    } catch (error) {
+
+      console.error(
+              "Firebase 초기화 실패:",
+              error
+      );
+
+      firebaseEnabled = false;
+
+      elements.firebaseStatus.textContent =
+              "로컬 저장";
+
+      loadLocalProgress();
+
+    }
+
+  }
+
+
+  async function loadFirebaseProgress() {
+
+    if (
+            !firebaseEnabled ||
+            !firebaseUser ||
+            !database
+    ) {
+      return;
     }
 
 
-    var width = 0;
-    function gage() {
-        document.getElementById( 'lb' ).value = width++;
+    try {
+
+      const progressRef = ref(
+              database,
+              "players/" +
+              firebaseUser.uid +
+              "/progress"
+      );
+
+      const snapshot =
+                    await get(progressRef);
+
+
+      if (snapshot.exists()) {
+
+        player = {
+          ...defaultPlayer,
+          ...snapshot.val()
+        };
+
+      }
+
+      loadLocalProgress(false);
+
+      render();
+
+    } catch (error) {
+
+      console.error(
+              "Firebase 데이터 불러오기 실패:",
+              error
+      );
+
+      loadLocalProgress();
+
     }
+
+  }
+
+
+  async function saveProgress() {
+
+    saveLocalProgress();
+
+
+    if (
+            !firebaseEnabled ||
+            !firebaseUser ||
+            !database
+    ) {
+      return;
+    }
+
+
+    try {
+
+      await set(
+              ref(
+                      database,
+                      "players/" +
+                      firebaseUser.uid +
+                      "/progress"
+              ),
+              {
+                level: player.level,
+                exp: player.exp,
+                gold: player.gold,
+                maxHp: player.maxHp,
+                hp: player.hp,
+                attack: player.attack,
+                stage: player.stage,
+                bestCombo: player.bestCombo,
+                updatedAt: Date.now()
+              }
+      );
+
+    } catch (error) {
+
+      console.error(
+              "Firebase 저장 실패:",
+              error
+      );
+
+    }
+
+  }
+
+
+  function saveLocalProgress() {
+
+    localStorage.setItem(
+            "typingRpgProgress",
+            JSON.stringify(player)
+    );
+
+  }
+
+
+  function loadLocalProgress(
+          overwrite = true
+  ) {
+
+    try {
+
+      const saved =
+                    localStorage.getItem(
+                            "typingRpgProgress"
+                    );
+
+
+      if (!saved) {
+        render();
+        return;
+      }
+
+
+      const data = JSON.parse(saved);
+
+
+      if (overwrite) {
+
+        player = {
+          ...defaultPlayer,
+          ...data
+        };
+
+      } else {
+
+        /*
+         * Firebase 데이터가 없는 신규 항목 등이
+         * 있을 때 로컬 기본값을 보완하는 정도로 사용
+         */
+
+        player = {
+          ...defaultPlayer,
+          ...player
+        };
+
+      }
+
+    } catch (error) {
+
+      console.error(
+              "로컬 데이터 로드 실패:",
+              error
+      );
+
+    }
+
+
+    render();
+
+  }
+
+
+  /* =========================================================
+     몬스터
+     ========================================================= */
+
+  function createMonster() {
+
+    const monsterIndex = Math.min(
+            Math.floor(
+                    (player.stage - 1) / 2
+            ),
+            monsters.length - 1
+    );
+
+
+    const base =
+                  monsters[monsterIndex];
+
+
+    const stageBonus =
+                  1 +
+                  Math.max(
+                          0,
+                          player.stage - 1
+                  ) * 0.06;
+
+
+    const maxHp =
+                  Math.round(
+                          base.hp * stageBonus
+                  );
+
+
+    currentMonster = {
+      ...base,
+
+      maxHp,
+      hp: maxHp,
+
+      damage:
+              Math.round(
+                      base.damage * stageBonus
+              ),
+
+      exp:
+              Math.round(
+                      base.exp * stageBonus
+              ),
+
+      gold:
+              Math.round(
+                      base.gold * stageBonus
+              )
+    };
+
+
+    renderMonster();
+
+  }
+
+
+  function renderMonster() {
+
+    if (!currentMonster) {
+      return;
+    }
+
+
+    elements.monsterName.textContent =
+            currentMonster.name;
+
+    elements.monsterCharacter.textContent =
+            currentMonster.emoji;
+
+
+    elements.monsterHpText.textContent =
+            currentMonster.hp +
+            " / " +
+            currentMonster.maxHp;
+
+
+    const ratio =
+                  (
+                          currentMonster.hp /
+                          currentMonster.maxHp
+                  ) * 100;
+
+
+    elements.monsterHpBar.style.width =
+            clamp(
+                    ratio,
+                    0,
+                    100
+            ) + "%";
+
+  }
+
+
+  /* =========================================================
+     플레이어
+     ========================================================= */
+
+  function expRequired() {
+
+    return (
+            100 +
+            (player.level - 1) * 50
+    );
+
+  }
+
+
+  function checkLevelUp() {
+
+    let required =
+                expRequired();
+
+
+    while (
+            player.exp >= required
+            ) {
+
+      player.exp -= required;
+
+      player.level++;
+
+      player.maxHp += 15;
+
+      player.hp =
+              player.maxHp;
+
+      player.attack += 3;
+
+
+      setMessage(
+              "🎉 레벨 " +
+              player.level +
+              " 달성! 최대 HP와 공격력이 증가했습니다.",
+              "success"
+      );
+
+
+      required =
+              expRequired();
+
+    }
+
+  }
+
+
+  function renderPlayer() {
+
+    elements.level.textContent =
+            player.level;
+
+
+    elements.exp.textContent =
+            player.exp +
+            " / " +
+            expRequired();
+
+
+    elements.gold.textContent =
+            player.gold;
+
+
+    elements.attack.textContent =
+            player.attack;
+
+
+    elements.bestCombo.textContent =
+            player.bestCombo;
+
+
+    elements.stage.textContent =
+            "STAGE " +
+            player.stage;
+
+
+    elements.playerHpText.textContent =
+            player.hp +
+            " / " +
+            player.maxHp;
+
+
+    const hpRatio =
+                  (
+                          player.hp /
+                          player.maxHp
+                  ) * 100;
+
+
+    elements.playerHpBar.style.width =
+            clamp(
+                    hpRatio,
+                    0,
+                    100
+            ) + "%";
+
+
+    elements.healButton.disabled =
+            !playing ||
+            player.gold < 30 ||
+            player.hp >= player.maxHp;
+
+
+    elements.powerButton.disabled =
+            !playing ||
+            player.gold < 50 ||
+            powerAttack;
+
+  }
+
+
+  /* =========================================================
+     타자 문제
+     ========================================================= */
+
+  function nextTarget() {
+
+    const mode =
+                  elements.practiceMode.value;
+
+    const difficulty =
+                  elements.difficulty.value;
+
+
+    const source =
+                  mode === "sentence"
+                          ? sentenceSources[difficulty]
+                          : wordSources[difficulty];
+
+
+    let next =
+                randomItem(source);
+
+
+    if (
+            source.length > 1 &&
+            next === target
+    ) {
+
+      do {
+
+        next =
+                randomItem(source);
+
+      } while (next === target);
+
+    }
+
+
+    target = next;
+
+    elements.targetWord.textContent =
+            target;
+
+    elements.typingInput.value = "";
+
+    elements.typingInput.classList.remove(
+            "correct",
+            "wrong"
+    );
+
+
+    elements.modeLabel.textContent =
+            mode === "sentence"
+                    ? "문장 연습 · SENTENCE MODE"
+                    : "단어 연습 · WORD MODE";
+
+  }
+
+
+  /* =========================================================
+     게임 시작
+     ========================================================= */
+
+  function startGame() {
+
+    playing = true;
+
+    combo = 0;
+
+    correctCount = 0;
+
+    totalAttempts = 0;
+
+    totalTypedCharacters = 0;
+
+    startTime = Date.now();
+
+    powerAttack = false;
+
+
+    if (player.hp <= 0) {
+      player.hp =
+              player.maxHp;
+    }
+
+
+    createMonster();
+
+    nextTarget();
+
+
+    elements.typingInput.disabled =
+            false;
+
+    elements.practiceMode.disabled =
+            true;
+
+    elements.difficulty.disabled =
+            true;
+
+    elements.startButton.textContent =
+            "↻ 새 게임";
+
+
+    elements.typingInput.focus();
+
+
+    setMessage(
+            "⚔️ 모험을 시작합니다. 정확하게 입력해 몬스터를 공격하세요!"
+    );
+
+
+    render();
+
+  }
+
+
+  /* =========================================================
+     공격
+     ========================================================= */
+
+  async function playerAttack() {
+
+    if (!currentMonster) {
+      return;
+    }
+
+
+    let damage =
+                player.attack +
+                Math.floor(
+                        combo / 5
+                );
+
+
+    if (powerAttack) {
+
+      damage *= 2;
+
+      powerAttack = false;
+
+    }
+
+
+    currentMonster.hp =
+            Math.max(
+                    0,
+                    currentMonster.hp - damage
+            );
+
+
+    animate(
+            elements.playerCharacter,
+            "attack"
+    );
+
+    animate(
+            elements.monsterCharacter,
+            "hit"
+    );
+
+
+    renderMonster();
+
+
+    if (
+            currentMonster.hp <= 0
+    ) {
+
+      await defeatMonster();
+
+      return;
+
+    }
+
+
+    /*
+     * 일정 확률로 몬스터 반격
+     */
+
+    if (
+            Math.random() < 0.32
+    ) {
+
+      window.setTimeout(
+              monsterAttack,
+              220
+      );
+
+    }
+
+  }
+
+
+  function monsterAttack() {
+
+    if (
+            !playing ||
+            !currentMonster
+    ) {
+      return;
+    }
+
+
+    player.hp =
+            Math.max(
+                    0,
+                    player.hp -
+                    currentMonster.damage
+            );
+
+
+    animate(
+            elements.monsterCharacter,
+            "attack"
+    );
+
+    animate(
+            elements.playerCharacter,
+            "hit"
+    );
+
+
+    renderPlayer();
+
+
+    if (player.hp <= 0) {
+
+      gameOver();
+
+    }
+
+  }
+
+
+  /* =========================================================
+     몬스터 처치
+     ========================================================= */
+
+  async function defeatMonster() {
+
+    const expReward =
+                  currentMonster.exp;
+
+    const goldReward =
+                  currentMonster.gold;
+
+
+    player.exp +=
+            expReward;
+
+    player.gold +=
+            goldReward;
+
+    player.stage++;
+
+
+    checkLevelUp();
+
+
+    setMessage(
+            "🏆 " +
+            currentMonster.name +
+            " 처치! EXP +" +
+            expReward +
+            " · Gold +" +
+            goldReward,
+            "success"
+    );
+
+
+    await saveProgress();
+
+
+    window.setTimeout(() => {
+
+      if (!playing) {
+        return;
+      }
+
+      createMonster();
+
+      nextTarget();
+
+      elements.typingInput.focus();
+
+    }, 650);
+
+  }
+
+
+  /* =========================================================
+     오답
+     ========================================================= */
+
+  function handleWrongAnswer() {
+
+    combo = 0;
+
+    elements.typingInput.classList.add(
+            "wrong"
+    );
+
+
+    window.setTimeout(() => {
+
+      elements.typingInput.classList.remove(
+              "wrong"
+      );
+
+    }, 180);
+
+
+    if (
+            currentMonster &&
+            Math.random() < 0.55
+    ) {
+
+      monsterAttack();
+
+    }
+
+
+    setMessage(
+            "💥 입력이 정확하지 않습니다. 다시 입력해 보세요.",
+            "danger"
+    );
+
+  }
+
+
+  /* =========================================================
+     입력
+     ========================================================= */
+
+  async function checkAnswer() {
+
+    if (!playing) {
+      return;
+    }
+
+
+    const value =
+                  elements.typingInput.value.trim();
+
+
+    if (!value) {
+      return;
+    }
+
+
+    totalAttempts++;
+
+    totalTypedCharacters +=
+            value.length;
+
+
+    if (value === target) {
+
+      correctCount++;
+
+      combo++;
+
+
+      player.bestCombo =
+              Math.max(
+                      player.bestCombo,
+                      combo
+              );
+
+
+      elements.typingInput.classList.add(
+              "correct"
+      );
+
+
+      await playerAttack();
+
+
+      if (
+              playing &&
+              currentMonster &&
+              currentMonster.hp > 0
+      ) {
+
+        nextTarget();
+
+      }
+
+
+      setMessage(
+              "✨ 정확합니다! 몬스터에게 피해를 입혔습니다.",
+              "success"
+      );
+
+    } else {
+
+      handleWrongAnswer();
+
+      elements.typingInput.select();
+
+    }
+
+
+    updateTypingStats();
+
+    renderPlayer();
+
+  }
+
+
+  function updateTypingStats() {
+
+    const elapsedMinutes =
+                  Math.max(
+                          (
+                                  Date.now() -
+                                  startTime
+                          ) / 60000,
+                          1 / 60
+                  );
+
+
+    const cpm =
+                  Math.round(
+                          totalTypedCharacters /
+                          elapsedMinutes
+                  );
+
+
+    const accuracy =
+                  totalAttempts > 0
+                          ? Math.round(
+                                  (
+                                          correctCount /
+                                          totalAttempts
+                                  ) * 100
+                          )
+                          : 100;
+
+
+    elements.speed.textContent =
+            cpm + " CPM";
+
+    elements.accuracy.textContent =
+            accuracy + "%";
+
+    elements.correct.textContent =
+            correctCount;
+
+    elements.currentCombo.textContent =
+            combo;
+
+
+    elements.combo.textContent =
+            combo >= 2
+                    ? "🔥 " + combo + " COMBO"
+                    : "";
+
+  }
+
+
+  /* =========================================================
+     스킬
+     ========================================================= */
+
+  async function useHeal() {
+
+    if (
+            !playing ||
+            player.gold < 30 ||
+            player.hp >= player.maxHp
+    ) {
+      return;
+    }
+
+
+    player.gold -= 30;
+
+    player.hp =
+            Math.min(
+                    player.maxHp,
+                    player.hp + 30
+            );
+
+
+    setMessage(
+            "❤️ 회복 물약을 사용했습니다. HP가 30 회복되었습니다.",
+            "success"
+    );
+
+
+    renderPlayer();
+
+    await saveProgress();
+
+    elements.typingInput.focus();
+
+  }
+
+
+  async function usePowerAttack() {
+
+    if (
+            !playing ||
+            player.gold < 50 ||
+            powerAttack
+    ) {
+      return;
+    }
+
+
+    player.gold -= 50;
+
+    powerAttack = true;
+
+
+    setMessage(
+            "⚡ 강력한 공격을 준비했습니다. 다음 정답 공격력이 2배가 됩니다.",
+            "success"
+    );
+
+
+    renderPlayer();
+
+    await saveProgress();
+
+    elements.typingInput.focus();
+
+  }
+
+
+  /* =========================================================
+     게임 종료
+     ========================================================= */
+
+  async function gameOver() {
+
+    playing = false;
+
+    combo = 0;
+
+    powerAttack = false;
+
+
+    elements.typingInput.disabled =
+            true;
+
+    elements.practiceMode.disabled =
+            false;
+
+    elements.difficulty.disabled =
+            false;
+
+
+    elements.gameOverModal.hidden =
+            false;
+
+
+    await saveProgress();
+
+    render();
+
+  }
+
+
+  function retryGame() {
+
+    elements.gameOverModal.hidden =
+            true;
+
+    player.hp =
+            player.maxHp;
+
+    startGame();
+
+  }
+
+
+  /* =========================================================
+     초기화
+     ========================================================= */
+
+  async function resetProgress() {
+
+    const confirmed =
+                  window.confirm(
+                          "저장된 RPG 진행도를 모두 초기화할까요?"
+                  );
+
+
+    if (!confirmed) {
+      return;
+    }
+
+
+    player = {
+      ...defaultPlayer
+    };
+
+
+    playing = false;
+
+    combo = 0;
+
+    correctCount = 0;
+
+    totalAttempts = 0;
+
+    totalTypedCharacters = 0;
+
+    powerAttack = false;
+
+    currentMonster = null;
+
+
+    localStorage.removeItem(
+            "typingRpgProgress"
+    );
+
+
+    if (
+            firebaseEnabled &&
+            firebaseUser &&
+            database
+    ) {
+
+      try {
+
+        await set(
+                ref(
+                        database,
+                        "players/" +
+                        firebaseUser.uid +
+                        "/progress"
+                ),
+                null
+        );
+
+      } catch (error) {
+
+        console.error(
+                "Firebase 초기화 실패:",
+                error
+        );
+
+      }
+
+    }
+
+
+    elements.typingInput.disabled =
+            true;
+
+    elements.typingInput.value =
+            "";
+
+    elements.targetWord.textContent =
+            "시작 버튼을 눌러주세요";
+
+    elements.startButton.textContent =
+            "▶ 게임 시작";
+
+    elements.practiceMode.disabled =
+            false;
+
+    elements.difficulty.disabled =
+            false;
+
+
+    setMessage(
+            "진행도가 초기화되었습니다."
+    );
+
+
+    render();
+
+  }
+
+
+  /* =========================================================
+     화면 렌더링
+     ========================================================= */
+
+  function render() {
+
+    renderPlayer();
+
+
+    if (currentMonster) {
+
+      renderMonster();
+
+    } else {
+
+      elements.monsterName.textContent =
+              "모험을 기다리는 중";
+
+      elements.monsterCharacter.textContent =
+              "❔";
+
+      elements.monsterHpText.textContent =
+              "- / -";
+
+      elements.monsterHpBar.style.width =
+              "0%";
+
+    }
+
+
+    updateTypingStats();
+
+  }
+
+
+  /* =========================================================
+     이벤트
+     ========================================================= */
+
+  elements.startButton.addEventListener(
+          "click",
+          startGame
+  );
+
+
+  elements.typingInput.addEventListener(
+          "keydown",
+          (event) => {
+
+            if (
+                    event.key !== "Enter" ||
+                    event.isComposing
+            ) {
+              return;
+            }
+
+
+            event.preventDefault();
+
+            checkAnswer();
+
+          }
+  );
+
+
+  /*
+   * 단어 모드는 입력이 정확히 일치하면
+   * Enter 없이 바로 공격
+   */
+
+  elements.typingInput.addEventListener(
+          "input",
+          () => {
+
+            if (
+                    !playing ||
+                    elements.practiceMode.value !== "word"
+            ) {
+              return;
+            }
+
+
+            if (
+                    elements.typingInput.value === target
+            ) {
+
+              checkAnswer();
+
+            }
+
+          }
+  );
+
+
+  elements.healButton.addEventListener(
+          "click",
+          useHeal
+  );
+
+
+  elements.powerButton.addEventListener(
+          "click",
+          usePowerAttack
+  );
+
+
+  elements.resetButton.addEventListener(
+          "click",
+          resetProgress
+  );
+
+
+  elements.retryButton.addEventListener(
+          "click",
+          retryGame
+  );
+
+
+  elements.gameOverModal.addEventListener(
+          "click",
+          (event) => {
+
+            if (
+                    event.target ===
+                    elements.gameOverModal
+            ) {
+
+              elements.gameOverModal.hidden =
+                      true;
+
+            }
+
+          }
+  );
+
+
+  /*
+   * 화면을 클릭했을 때 게임 중이면
+   * 입력창에 자연스럽게 다시 포커스
+   */
+
+  document.addEventListener(
+          "click",
+          (event) => {
+
+            if (!playing) {
+              return;
+            }
+
+
+            if (
+                    event.target.closest(
+                            "button, select"
+                    )
+            ) {
+              return;
+            }
+
+
+            elements.typingInput.focus();
+
+          }
+  );
+
+
+  /*
+   * 페이지 종료 전 현재 데이터 로컬 저장
+   */
+
+  window.addEventListener(
+          "beforeunload",
+          () => {
+
+            if (playing) {
+              saveLocalProgress();
+            }
+
+          }
+  );
+
+
+  /* =========================================================
+     실행
+     ========================================================= */
+
+  render();
+
+  initializeFirebase();
 
 </script>
-
-<script src="TextSource_Kor.js"></script>
-<script src="WordSource_Kor.js"></script>
-
-<script src="practicemode.js"></script>
-
-<!-- <script type="module">
-   import {} from './main_DB.js';
-</script> -->
-<div class="uid_box"><span class="uid"></span></div>
 
 </body>
 </html>
